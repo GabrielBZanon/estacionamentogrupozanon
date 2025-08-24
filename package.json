@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "npx nodemon api/server.js",
-    "postinstall": "prisma migrate"
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "Zanon-Marcos-Kauê-Colombo-Giachetto",
