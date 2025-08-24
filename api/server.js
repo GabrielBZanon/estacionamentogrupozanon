@@ -66,17 +66,54 @@ app.get('/veiculos', (req, res) => {
     ]);
 });
 
-app.get('/estadias', (req, res) => {
-    console.log('✅ Rota /estadias funcionando!');
+// ⚡ ROTAS SIMPLES DE TESTE - COLE NO SEU server.js
+// Adicione estas rotas ANTES de qualquer outra coisa:
+
+// Rota de teste para veículos
+app.get('/veiculos', (req, res) => {
+    console.log('✅ Rota /veiculos foi chamada!');
     res.json([
         {
-            placa: 'AAA0000',
-            entrada: '2024-01-24T08:00:00Z',
-            saida: '2024-01-24T10:00:00Z',
-            valor: 20.00
+            placa: "AAA0000",
+            entrada: "2024-01-24T08:00:00.000Z",
+            saida: "2024-01-24T10:00:00.000Z"
+        },
+        {
+            placa: "AAL2525", 
+            entrada: "2024-01-24T08:00:00.000Z",
+            saida: null
+        },
+        {
+            placa: "AAA1358",
+            entrada: "2024-01-24T08:00:00.000Z",
+            saida: "2024-01-24T10:00:00.000Z"
         }
     ]);
 });
 
-// Export para Vercel (NÃO use app.listen!)
+// Rota de teste para estadias
+app.get('/estadias', (req, res) => {
+    console.log('✅ Rota /estadias foi chamada!');
+    res.json([
+        {
+            id: 1,
+            placa: "AAA0000",
+            entrada: "2024-01-24T08:00:00.000Z",
+            saida: "2024-01-24T10:00:00.000Z",
+            valor: 20.00
+        },
+        {
+            id: 2,
+            placa: "AAL2525",
+            entrada: "2024-01-24T08:00:00.000Z",
+            saida: null,
+            valor: 0.00
+        }
+    ]);
+});
+
+// Rota de saúde para testar
+app.get('/health', (req, res) => {
+    res.json({ status: 'OK', message: 'API funcionando!' });
+});
 module.exports = app;
