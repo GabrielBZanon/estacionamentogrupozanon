@@ -1,21 +1,51 @@
+// api/server.js
 const express = require('express');
 const cors = require('cors');
 const routes = require('../src/routes.js');
 
-const port = process.env.PORT || 3001;
 const app = express();
+
+// Configuração CORS - deve vir primeiro
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
+}));
+
+// Middleware para parsing JSON
 app.use(express.json());
-app.use(cors());
+
+// Importar e usar rotas
 app.use(routes);
 
-app.listen(port, (req, res) => {
-    console.log('API respondendo em http://localhost:' + port)
+// Rota de saúde para teste
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'healthy', 
+    message: 'API Estacionamento funcionando',
+    timestamp: new Date().toISOString()
+  });
 });
 
-// Habilitar CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
+// Rota raiz
+app.get('/', (req, res) => {
+  res.json({
+    titulo: "API Estacionamento",
+    versao: "1.0.0",
+    rotas: [
+      { metodo: "GET", caminho: "/veiculos" },
+      { metodo: "GET", caminho: "/veiculos/:placa" },
+      { metodo: "POST", caminho: "/veiculos" },
+      { metodo: "PATCH", caminho: "/veiculos/:placa" },
+      { metodo: "DELETE", caminho: "/veiculos/:placa" },
+      { metodo: "GET", caminho: "/estadias" },
+      { metodo: "GET", caminho: "/estadias/:placa" },
+      { metodo: "POST", caminho: "/estadias" },
+      { metodo: "PATCH", caminho: "/estadias/:id" },
+      { metodo: "DELETE", caminho: "/estadias/:id" }
+    ]
+  });
 });
+
+// Export para Vercel (NÃO use app.listen!)
+module.exports = app;
