@@ -79,7 +79,7 @@ function salvarDados() {
     }
 }
 
-// ⚡ ROTAS
+// ⚡ ROTAS PRINCIPAIS
 app.get('/veiculos', (req, res) => {
     console.log('✅ /veiculos - Retornando', veiculos.length, 'veículos');
     res.json(veiculos);
@@ -90,6 +90,14 @@ app.get('/estadias', (req, res) => {
     res.json(estadias);
 });
 
+// Rota para veículos estacionados
+app.get('/veiculos/estacionados', (req, res) => {
+    const estacionados = veiculos.filter(v => v.saida === null);
+    console.log('🚗 Veículos estacionados:', estacionados.length);
+    res.json(estacionados);
+});
+
+// Cadastrar novo veículo
 app.post('/veiculos', (req, res) => {
     console.log('✅ POST /veiculos - Dados:', req.body);
     
@@ -133,13 +141,71 @@ app.post('/veiculos', (req, res) => {
     res.status(201).json(novoVeiculo);
 });
 
-// Saúde com dados atuais
+// Rota para dar baixa na saída do veículo
+app.patch('/veiculos/:placa/saida', (req, res) => {
+    const { placa } = req.params;
+    const saida = new Date().toISOString();
+    
+    console.log(`🚗 Tentativa de saída: ${placa} às ${saida}`);
+    
+    // Encontrar o veículo
+    const veiculoIndex = veiculos.findIndex(v => 
+        v.placa === placa.toUpperCase() && v.saida === null
+    );
+    
+    if (veiculoIndex === -1) {
+        return res.status(404).json({ error: 'Veículo não encontrado ou já deu baixa' });
+    }
+    
+    // Atualizar veículo
+    veiculos[veiculoIndex].saida = saida;
+    
+    // Atualizar estadia correspondente
+    const estadiaIndex = estadias.findIndex(e => 
+        e.placa === placa.toUpperCase() && e.saida === null
+    );
+    
+    if (estadiaIndex !== -1) {
+        const entrada = new Date(estadias[estadiaIndex].entrada);
+        const saidaDate = new Date(saida);
+        const horas = Math.ceil((saidaDate - entrada) / (1000 * 60 * 60)); // Arredonda para cima
+        const valor = horas * 10;
+        
+        estadias[estadiaIndex].saida = saida;
+        estadias[estadiaIndex].valor = valor;
+        
+        console.log(`💰 Veículo ${placa} - ${horas}h = R$ ${valor.toFixed(2)}`);
+    }
+    
+    salvarDados();
+    
+    res.json({
+        success: true,
+        veiculo: veiculos[veiculoIndex],
+        estadia: estadias[estadiaIndex] || null,
+        message: `Baixa realizada para ${placa}`
+    });
+});
+
+// Rotas de saúde
 app.get('/health', (req, res) => {
     res.json({ 
         status: 'OK', 
         veiculos: veiculos.length,
         estadias: estadias.length,
         estacionados: veiculos.filter(v => v.saida === null).length
+    });
+});
+
+app.get('/', (req, res) => {
+    res.json({
+        message: 'API Estacionamento ACME',
+        version: '1.0.0',
+        estatisticas: {
+            total_veiculos: veiculos.length,
+            veiculos_estacionados: veiculos.filter(v => v.saida === null).length,
+            total_estadias: estadias.length
+        }
     });
 });
 
