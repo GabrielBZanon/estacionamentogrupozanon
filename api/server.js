@@ -47,5 +47,34 @@ app.get('/', (req, res) => {
   });
 });
 
+// Rotas simples de TESTE - coloque antes das outras rotas
+app.get('/veiculos', (req, res) => {
+    console.log('✅ Rota /veiculos funcionando!');
+    res.json([
+        { 
+            placa: 'AAA0000', 
+            entrada: '2024-01-24T08:00:00Z',
+            saida: '2024-01-24T10:00:00Z'
+        },
+        { 
+            placa: 'AAL2525', 
+            entrada: '2024-01-24T08:00:00Z',
+            saida: null // Veículo ainda estacionado
+        }
+    ]);
+});
+
+app.get('/estadias', (req, res) => {
+    console.log('✅ Rota /estadias funcionando!');
+    res.json([
+        {
+            placa: 'AAA0000',
+            entrada: '2024-01-24T08:00:00Z',
+            saida: '2024-01-24T10:00:00Z',
+            valor: 20.00
+        }
+    ]);
+});
+
 // Export para Vercel (NÃO use app.listen!)
 module.exports = app;
