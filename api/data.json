@@ -1,0 +1,47 @@
+{
+  "veiculos": [
+    {
+      "placa": "AAA0000",
+      "entrada": "2024-01-24T08:00:00.000Z",
+      "saida": "2024-01-24T10:00:00.000Z"
+    },
+    {
+      "placa": "AAL2525",
+      "entrada": "2024-01-24T08:00:00.000Z",
+      "saida": null
+    },
+    {
+      "placa": "AAA1358",
+      "entrada": "2024-01-24T08:00:00.000Z",
+      "saida": "2024-01-24T10:00:00.000Z"
+    },
+    {
+      "placa": "GZA7887",
+      "entrada": "2025-08-24T19:18:43.327Z",
+      "saida": null
+    }
+  ],
+  "estadias": [
+    {
+      "id": 1,
+      "placa": "AAA0000",
+      "entrada": "2024-01-24T08:00:00.000Z",
+      "saida": "2024-01-24T10:00:00.000Z",
+      "valor": 20
+    },
+    {
+      "id": 2,
+      "placa": "AAL2525",
+      "entrada": "2024-01-24T08:00:00.000Z",
+      "saida": null,
+      "valor": 0
+    },
+    {
+      "id": 3,
+      "placa": "GZA7887",
+      "entrada": "2025-08-24T19:18:43.329Z",
+      "saida": null,
+      "valor": 0
+    }
+  ]
+}
