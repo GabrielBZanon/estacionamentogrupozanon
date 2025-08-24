@@ -5,6 +5,7 @@ const routes = require('../src/routes.js');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 // Configuração CORS - deve vir primeiro
 app.use(cors({
