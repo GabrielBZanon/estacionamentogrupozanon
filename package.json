@@ -1,0 +1,20 @@
+{
+  "name": "estacionamentogrupozanon",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "npx nodemon api/server.js",
+    "postinstall": "prisma migrate dev --name init && prisma generate"
+  },
+  "keywords": [],
+  "author": "Zanon-Marcos-Kauê-Colombo-Giachetto",
+  "license": "ISC",
+  "description": "Projeto de Estacionamento API, para aulas de Node.js",
+  "dependencies": {
+    "@prisma/client": "^6.14.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "prisma": "^6.14.0"
+  }
+}
