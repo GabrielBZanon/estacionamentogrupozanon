@@ -143,4 +143,18 @@ app.get('/health', (req, res) => {
     });
 });
 
+app.get('/', (req, res) => {
+    res.json({
+        message: '🚀 API Estacionamento ACME - Funcionando!',
+        version: '1.0.0',
+        endpoints: {
+            veiculos: '/veiculos',
+            estadias: '/estadias', 
+            health: '/health',
+            estacionados: '/veiculos/estacionados'
+        },
+        documentation: 'Acesse /health para status do sistema'
+    });
+});
+
 module.exports = app;
